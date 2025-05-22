@@ -126,106 +126,122 @@ export default function Home() {
     <ChakraProvider>
       <Global
         styles={css`
-          body {
+          html, body {
             margin: 0;
             padding: 0;
+          }
+          body {
             background-color: #4A1B31;
-            background-image: url('/images/pattern.png'), linear-gradient(135deg, #4A1B31 0%, #5D223D 100%);
+            background-image: url('/images/pattern.png');
             background-repeat: repeat;
             background-position: center;
-            background-size: 80px 80px, cover;
+            background-size: 80px 80px;
             font-family: 'Inter', sans-serif;
             color: #fff;
           }
         `}
       />
 
-      <Box p={6} maxW="1200px" mx="auto">
-                {/* Header */}
-                <Flex
-                    bg="#4A1B31"
-                    p={4}
-                    rounded="md"
-                    justify="center"
-                    align="center"
-                    mb={12}
-                    minH="120px"
-                >
-                    <Heading as="h1" size={{ base: 'xl', md: '2xl' }} textAlign="center" fontFamily="'Russo One', 'Inter', sans-serif" letterSpacing="wide" color="#fff" fontWeight="extrabold" textShadow="0 2px 16px #0008"
-                    >
-                        Отечественные игры XX века
-                    </Heading>
-                </Flex>
+      {/* Header background stripe full width */}
+<Box position="absolute" top={0} left={0} right={0}>
+        <Box bg="#9d1f4e" w="100%" py={{ base: 8, md: 24 }} />
 
-                {/* Preview cards */}
-                <Box bg="linear-gradient(135deg, #4A1B31 0%, #5D223D 100%)" p={{ base: 4, md: 6 }} rounded="md" mb={12}>
-  <Flex direction="column" gap={{ base: 6, md: 8 }}>
-    {games.map((game, index) => (
-      <Flex
-        key={game.title}
-        direction={{ base: 'column', md: index % 2 === 0 ? 'row' : 'row-reverse' }}
-        align="center"
-        gap={{ base: 4, md: 6 }}
-      >
-        {/* Card button with image */}
-        <MotionBox
-                  as="button"
-                  onClick={() => openGame(game)}
-                  bg="#f7f3fa"
-                  p={{ base: 2, md: 4 }}
-                  rounded="xl"
-                  shadow="lg"
-                  cursor="pointer"
-                  whileHover={{ scale: 1.03 }}
-                  w={{ base: '100%', md: '320px' }}
-                  mx="auto"
-                >
-        
-          <Box
-            position="relative"
-            width="100%"
-            height={{ base: '160px', md: '180px' }}
-            minH="160px"
-            bg="gray.200"
-            rounded="lg"
-            overflow="hidden"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <NextImage
-              src={game.thumbnail}
-              alt={game.title}
-              layout="fill"
-              objectFit="cover"
-              style={{ borderRadius: '0.5rem' }}
-            />
-          </Box>
-        </MotionBox>
-
-        {/* Text preview block */}
-        <Box flex="1" bg="#fff" p={{ base: 3, md: 4 }} rounded="xl" shadow="md" w="100%">
-          <Text fontSize={{ base: 'md', md: 'lg' }} mb={2} color="#2d133b">
-            {game.description.preview}
-          </Text>
-          <Text fontSize="xs" color="gray.500">
-            Год: {game.year} | Автор: {game.author}
-          </Text>
-        </Box>
-      </Flex>
-    ))}
+  {/* Header image overlapping stripe */}
+  <Flex
+    justify="center"
+    position="relative"
+    zIndex={1}
+    mt={{ base: -16, md: -40 }}
+    mb={12}
+  >
+    <Box position="relative" width={{ base: '90%', md: '60%' }} height={{ base: '120px', md: '180px' }}>
+      <NextImage
+        src="/images/header-title.png"
+        alt="Заголовок сайта"
+        layout="fill"
+        objectFit="contain"
+      />
+    </Box>
   </Flex>
 </Box>
 
+<Box 
+  mt={{ base: '116px', md: '200px' }}
+  px={{ base: 4, md: 6 }}
+  pb={{ base: 6, md: 6 }}
+  maxW="1200px"
+  mx="auto"
+>
+
+
+        {/* Preview cards */}
+  <Flex direction="column" gap={{ base: 6, md: 8 }} mb={12}>
+          {games.map((game, index) => (
+            <Flex
+              key={game.title}
+              direction={{ base: 'column', md: index % 2 === 0 ? 'row' : 'row-reverse' }}
+              align="center"
+              gap={{ base: 4, md: 6 }}
+            >
+              {/* Card button with image */}
+              <MotionBox
+                as="button"
+                outline="none"
+                _focus={{ boxShadow: 'none' }}
+                onClick={() => openGame(game)}
+                bg="#f7f3fa"
+                // p={{ base: 2, md: 4 }}
+                rounded="32px"
+                shadow="lg"
+                cursor="pointer"
+                whileHover={{ scale: 1.03 }}
+                w={{ base: '100%', md: '320px' }}
+                mx="auto"
+              >
+                <Box
+                  position="relative"
+                  width="100%"
+                  height={{ base: '160px', md: '180px' }}
+                  minH="160px"
+                  bg="gray.200"
+                  rounded="32px"
+                  overflow="hidden"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <NextImage
+                    src={game.thumbnail}
+                    alt={game.title}
+                    layout="fill"
+                    objectFit="cover"
+                    style={{ borderRadius: '0.5rem' }}
+                  />
+                </Box>
+              </MotionBox>
+
+              {/* Text preview block */}
+              <Box bg="#fff" p={{ base: 3, md: 4 }} rounded="xl" shadow="md" w="100%">
+                <Text fontSize={{ base: 'md', md: 'lg' }} mb={2} color="#2d133b">
+                  {game.description.preview}
+                </Text>
+                <Text fontSize="xs" color="gray.500">
+                  Год: {game.year} | Автор: {game.author}
+                </Text>
+              </Box>
+            </Flex>
+          ))}
+        </Flex>
+
 {/* Modal with details */}
-        {selectedGame && (
+         {selectedGame && (
           <Modal isOpen={isOpen} onClose={onClose} isCentered size="xl">
             <ModalOverlay bg="blackAlpha.600" backdropFilter="blur(8px)" />
             <ModalContent bg="linear-gradient(135deg, #6d2a4b 0%, #a02a5a 100%)" p={6} rounded="2xl" maxW="800px" maxH="90vh">
               <Heading as="h2" size="xl" mb={6} textAlign="center" color="#fff" textShadow="0 2px 16px #0008">
                 {selectedGame.title}
               </Heading>
-                            <Box overflowY="auto" maxH="70vh">
+              <Box overflowY="auto" maxH="70vh">
                 <Grid templateColumns={{ base: '1fr', md: '2fr 1fr' }} templateRows={{ base: 'auto auto auto', md: 'auto auto' }} gap={4} mb={4}>
                                     <Box rounded="lg" overflow="hidden" bg="gray.100" minH="200px">
                                         <Box position="relative" width="100%" height="200px">
@@ -257,7 +273,7 @@ export default function Home() {
                                     </Box>
                                 </Grid>
 
-                                <Box bg="#6d2a4b" rounded="lg" p={4} mb={4}>
+                <Box bg="#6d2a4b" rounded="lg" p={4} mb={4}>
                   <Text color="#fff">{selectedGame.description.bottomFull}</Text>
                 </Box>
 
