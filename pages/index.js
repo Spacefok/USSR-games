@@ -1,15 +1,20 @@
 import React from 'react';
 import {
-    ChakraProvider,
-    Box,
-    Flex,
-    Grid,
-    Heading,
-    Text,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    useDisclosure
+  ChakraProvider,
+  Box,
+  Flex,
+  Grid,
+  Heading,
+  Text,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  useDisclosure,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon
 } from '@chakra-ui/react';
 import { Global, css } from '@emotion/react';
 import { motion } from 'framer-motion';
@@ -109,35 +114,33 @@ const games = [
 ];
 
 export default function Home() {
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const [selectedGame, setSelectedGame] = React.useState(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedGame, setSelectedGame] = React.useState(null);
 
-    const openGame = (game) => {
-        setSelectedGame(game);
-        onOpen();
-    };
+  const openGame = (game) => {
+    setSelectedGame(game);
+    onOpen();
+  };
 
-    return (
-        <ChakraProvider>
-            <Global
-    styles={css`
-      body {
-        margin: 0;
-        padding: 0;
-        background-color: #4A1B31;
-        background-image:
-          url('/images/pattern.png'),
-          linear-gradient(135deg, #4A1B31 0%, #5D223D 100%);
-        background-repeat: repeat;
-        background-position: center;
-        background-size: 80px 80px, cover;
-        font-family: 'Inter', sans-serif;
-        color: #fff;
-      }
-    `}
- />
+  return (
+    <ChakraProvider>
+      <Global
+        styles={css`
+          body {
+            margin: 0;
+            padding: 0;
+            background-color: #4A1B31;
+            background-image: url('/images/pattern.png'), linear-gradient(135deg, #4A1B31 0%, #5D223D 100%);
+            background-repeat: repeat;
+            background-position: center;
+            background-size: 80px 80px, cover;
+            font-family: 'Inter', sans-serif;
+            color: #fff;
+          }
+        `}
+      />
 
-            <Box p={6} maxW="1200px" mx="auto">
+      <Box p={6} maxW="1200px" mx="auto">
                 {/* Header */}
                 <Flex
                     bg="#4A1B31"
@@ -148,96 +151,82 @@ export default function Home() {
                     mb={12}
                     minH="120px"
                 >
-                    <Heading
-                        as="h1"
-                        size="2xl"
-                        textAlign="center"
-                        fontFamily="'Russo One', 'Inter', sans-serif"
-                        letterSpacing="wide"
-                        color="#fff"
-                        fontWeight="extrabold"
-                        textShadow="0 2px 16px #0008"
+                    <Heading as="h1" size={{ base: 'xl', md: '2xl' }} textAlign="center" fontFamily="'Russo One', 'Inter', sans-serif" letterSpacing="wide" color="#fff" fontWeight="extrabold" textShadow="0 2px 16px #0008"
                     >
                         Отечественные игры XX века
                     </Heading>
                 </Flex>
 
                 {/* Preview cards */}
-                <Box bg="linear-gradient(135deg, #4A1B31 0%, #5D223D 100%)" p={6} rounded="md" mb={12}>
-                    <Flex direction="column" gap={8}>
-                        {games.map((game, index) => (
-                            <Flex
-                                key={game.title}
-                                direction={index % 2 === 0 ? 'row' : 'row-reverse'}
-                                align="center"
-                                gap={6}
-                            >
-                                {/* Card button with image */}
-                                <MotionBox
-                                    as="button"
-                                    onClick={() => openGame(game)}
-                                    bg="#f7f3fa"
-                                    p={4}
-                                    rounded="xl"
-                                    shadow="lg"
-                                    cursor="pointer"
-                                    whileHover={{ scale: 1.03 }}
-                                    flex="1"
-                                    maxW="320px"
-                                    minW="220px"
-                                >
-                                    <Box
-                                        position="relative"
-                                        width="100%"
-                                        height="180px"
-                                        minH="180px"
-                                        bg="gray.200"
-                                        rounded="lg"
-                                        overflow="hidden"
-                                        display="flex"
-                                        alignItems="center"
-                                        justifyContent="center"
-                                    >
-                                        <NextImage
-                                            src={game.thumbnail}
-                                            alt={game.title}
-                                            layout="fill"
-                                            objectFit="cover"
-                                            style={{ borderRadius: '0.5rem' }}
-                                        />
-                                    </Box>
-                                </MotionBox>
+                <Box bg="linear-gradient(135deg, #4A1B31 0%, #5D223D 100%)" p={{ base: 4, md: 6 }} rounded="md" mb={12}>
+  <Flex direction="column" gap={{ base: 6, md: 8 }}>
+    {games.map((game, index) => (
+      <Flex
+        key={game.title}
+        direction={{ base: 'column', md: index % 2 === 0 ? 'row' : 'row-reverse' }}
+        align="center"
+        gap={{ base: 4, md: 6 }}
+      >
+        {/* Card button with image */}
+        <MotionBox
+                  as="button"
+                  onClick={() => openGame(game)}
+                  bg="#f7f3fa"
+                  p={{ base: 2, md: 4 }}
+                  rounded="xl"
+                  shadow="lg"
+                  cursor="pointer"
+                  whileHover={{ scale: 1.03 }}
+                  w={{ base: '100%', md: '320px' }}
+                  mx="auto"
+                >
+        
+          <Box
+            position="relative"
+            width="100%"
+            height={{ base: '160px', md: '180px' }}
+            minH="160px"
+            bg="gray.200"
+            rounded="lg"
+            overflow="hidden"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <NextImage
+              src={game.thumbnail}
+              alt={game.title}
+              layout="fill"
+              objectFit="cover"
+              style={{ borderRadius: '0.5rem' }}
+            />
+          </Box>
+        </MotionBox>
 
-                                {/* Text preview block */}
-                                <Box flex="2" bg="#fff" p={4} rounded="xl" shadow="md">
-                                    <Text fontSize="lg" mb={2} color="#2d133b">
-                                        {game.description.preview}
-                                    </Text>
-                                    <Text fontSize="xs" color="gray.500">
-                                        Год: {game.year} | Автор: {game.author}
-                                    </Text>
-                                </Box>
-                            </Flex>
-                        ))}
-                    </Flex>
-                </Box>
+        {/* Text preview block */}
+        <Box flex="1" bg="#fff" p={{ base: 3, md: 4 }} rounded="xl" shadow="md" w="100%">
+          <Text fontSize={{ base: 'md', md: 'lg' }} mb={2} color="#2d133b">
+            {game.description.preview}
+          </Text>
+          <Text fontSize="xs" color="gray.500">
+            Год: {game.year} | Автор: {game.author}
+          </Text>
+        </Box>
+      </Flex>
+    ))}
+  </Flex>
+</Box>
 
-                {/* Modal with details */}
-                {selectedGame && (
-                    <Modal isOpen={isOpen} onClose={onClose} isCentered size="xl">
-                        <ModalOverlay bg="blackAlpha.600" backdropFilter="blur(8px)" />
-                        <ModalContent
-                            bg="linear-gradient(135deg, #6d2a4b 0%, #a02a5a 100%)"
-                            p={6}
-                            rounded="2xl"
-                            maxW="800px"
-                            maxH="90vh"
-                        >
-                            <Heading as="h2" size="xl" mb={6} textAlign="center" color="#fff" textShadow="0 2px 16px #0008">
-                                {selectedGame.title}
-                            </Heading>
+{/* Modal with details */}
+        {selectedGame && (
+          <Modal isOpen={isOpen} onClose={onClose} isCentered size="xl">
+            <ModalOverlay bg="blackAlpha.600" backdropFilter="blur(8px)" />
+            <ModalContent bg="linear-gradient(135deg, #6d2a4b 0%, #a02a5a 100%)" p={6} rounded="2xl" maxW="800px" maxH="90vh">
+              <Heading as="h2" size="xl" mb={6} textAlign="center" color="#fff" textShadow="0 2px 16px #0008">
+                {selectedGame.title}
+              </Heading>
                             <Box overflowY="auto" maxH="70vh">
-                                <Grid templateColumns="2fr 1fr" templateRows="auto auto" gap={4} mb={4}>
+                <Grid templateColumns={{ base: '1fr', md: '2fr 1fr' }} templateRows={{ base: 'auto auto auto', md: 'auto auto' }} gap={4} mb={4}>
                                     <Box rounded="lg" overflow="hidden" bg="gray.100" minH="200px">
                                         <Box position="relative" width="100%" height="200px">
                                             <NextImage
@@ -269,32 +258,32 @@ export default function Home() {
                                 </Grid>
 
                                 <Box bg="#6d2a4b" rounded="lg" p={4} mb={4}>
-                                    <Text color="#fff">{selectedGame.description.bottomFull}</Text>
-                                </Box>
+                  <Text color="#fff">{selectedGame.description.bottomFull}</Text>
+                </Box>
 
-                                {selectedGame.details && (
-                                    <Box
-                                        bg="#3a1027"
-                                        rounded="lg"
-                                        p={4}
-                                        maxH="350px"
-                                        overflowY="auto"
-                                        fontSize="md"
-                                        sx={{
-                                            'h2, h3': { fontWeight: 'bold', marginTop: '1em', marginBottom: '0.5em' },
-                                            'ul': { marginLeft: '1.2em', marginBottom: '1em' }
-                                        }}
-                                    >
-                                        <Text as="div" whiteSpace="pre-line" color="#fff">
-                                            {selectedGame.details}
-                                        </Text>
-                                    </Box>
-                                )}
-                            </Box>
-                        </ModalContent>
-                    </Modal>
+                {/* Улучшенный блок details с Accordion */}
+                {selectedGame.details && (
+                  <Accordion allowToggle bg="#3a1027" rounded="lg" p={4}>
+                    <AccordionItem border="none">
+                      <AccordionButton _expanded={{ bg: '#2d0d1a', color: '#fff' }}>
+                        <Box flex="1" textAlign="left" fontWeight="bold" color="#fff">
+                          Дополнительная информация
+                        </Box>
+                        <AccordionIcon color="#fff" />
+                      </AccordionButton>
+                      <AccordionPanel pb={4} color="#fff" fontSize="md" sx={{ 'h2, h3': { fontWeight: 'bold', mt: 4, mb: 2 }, 'ul': { ml: 6, mb: 4 } }}>
+                        <Text whiteSpace="pre-line">
+                          {selectedGame.details}
+                        </Text>
+                      </AccordionPanel>
+                    </AccordionItem>
+                  </Accordion>
                 )}
-            </Box>
-        </ChakraProvider>
-    );
+              </Box>
+            </ModalContent>
+          </Modal>
+        )}
+      </Box>
+    </ChakraProvider>
+  );
 }
