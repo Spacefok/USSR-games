@@ -14,7 +14,8 @@ import {
   AccordionItem,
   AccordionButton,
   AccordionPanel,
-  AccordionIcon
+  AccordionIcon,
+  Show
 } from '@chakra-ui/react';
 import { Global, css } from '@emotion/react';
 import { motion } from 'framer-motion';
@@ -135,12 +136,31 @@ export default function Home() {
             background-image: url('/images/pattern.png');
             background-repeat: repeat;
             background-position: center;
-            background-size: 80px 80px;
+            background-size: 700px 700px;
             font-family: 'Inter', sans-serif;
             color: #fff;
           }
         `}
       />
+
+      {/* Декоративные тетромино */}
+                  <Show above="md">
+              {['/images/ttr1.png','/images/ttr2.png','/images/ttr3.png','/images/ttr4.png','/images/ttr5.png','/images/ttr6.png','/images/ttr7.png','/images/ttr8.png'].map((src, i) => (
+                <Box
+                  key={i}
+                  position="absolute"
+                  top={`${200 + i*120}px`} // смещение по вертикали
+                  left={i % 2 === 0 ? 0 : 'auto'}
+                  right={i % 2 !== 0 ? 0 : 'auto'}
+                  width="192px"
+                  height="192px"
+                  zIndex={-1}
+                  userSelect="none"
+                >
+                  <NextImage src={src} alt={`Тетромино ${i+1}`} layout="fill" objectFit="contain" />
+                </Box>
+              ))}
+            </Show>
 
       {/* Header background stripe full width */}
 <Box position="absolute" top={0} left={0} right={0}>
@@ -190,18 +210,17 @@ export default function Home() {
                 _focus={{ boxShadow: 'none' }}
                 onClick={() => openGame(game)}
                 bg="#f7f3fa"
-                // p={{ base: 2, md: 4 }}
                 rounded="32px"
                 shadow="lg"
                 cursor="pointer"
                 whileHover={{ scale: 1.03 }}
-                w={{ base: '100%', md: '320px' }}
+                w={{ base: '100%', md: '600px' }}
                 mx="auto"
               >
                 <Box
                   position="relative"
                   width="100%"
-                  height={{ base: '160px', md: '180px' }}
+                  height={{ base: '160px', md: '220px' }}
                   minH="160px"
                   bg="gray.200"
                   rounded="32px"
@@ -221,11 +240,11 @@ export default function Home() {
               </MotionBox>
 
               {/* Text preview block */}
-              <Box bg="#fff" p={{ base: 3, md: 4 }} rounded="xl" shadow="md" w="100%">
-                <Text fontSize={{ base: 'md', md: 'lg' }} mb={2} color="#2d133b">
+              <Box bg="black" borderWidth="5px" borderColor="green.600" p={{ base: 3, md: 4 }} rounded="xl" shadow="md" w="100%">
+                <Text fontSize={{ base: 'md', md: 'lg' }} mb={2} color="white">
                   {game.description.preview}
                 </Text>
-                <Text fontSize="xs" color="gray.500">
+                <Text fontSize="xs" color="green.400">
                   Год: {game.year} | Автор: {game.author}
                 </Text>
               </Box>
@@ -277,7 +296,7 @@ export default function Home() {
                   <Text color="#fff">{selectedGame.description.bottomFull}</Text>
                 </Box>
 
-                {/* Улучшенный блок details с Accordion */}
+                {/* Улучшенный блок details */}
                 {selectedGame.details && (
                   <Accordion allowToggle bg="#3a1027" rounded="lg" p={4}>
                     <AccordionItem border="none">
